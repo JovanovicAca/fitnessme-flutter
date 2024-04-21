@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 child: Text('Login'),
                 onPressed: () async {
-                  //  if (_formKey.currentState!.validate()) {
+                   if (_formKey.currentState!.validate()) {
                   var data = {
                     'email': _emailController.text,
                     'password': _passwordController.text,
@@ -87,13 +87,12 @@ class _LoginPageState extends State<LoginPage> {
                       body: body,
                     );
                     if (mounted) {
-                      //   if (response.statusCode == 200) {
-                      // String? token =
-                      //     response.headers['authorization']?.split(' ').last;
-                      String token = "token";
+                        if (response.statusCode == 200) {
+                      String? token =
+                          response.headers['authorization']?.split(' ').last;
+                      // String token = "token";
                       if (token != null && token.isNotEmpty) {
                         await storage.write(key: 'jwt', value: token);
-                        print('User logged successfully');
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => MainScreen()),
@@ -103,16 +102,16 @@ class _LoginPageState extends State<LoginPage> {
                         print("Error with token retrieving");
                         return;
                       }
-                      //    } else {
-                      //   setState(() {
-                      //     _credentialsError = true;
-                      //   });
-                      // }
+                         } else {
+                        setState(() {
+                          _credentialsError = true;
+                        });
+                      }
                     }
                   } catch (exception) {
                     print('Failed to login user: $exception');
                   }
-                  //   }
+                    }
                 },
                 style: TextButton.styleFrom(
                     primary: Colors.blue,

@@ -28,4 +28,15 @@ class User {
       'role': role,
     };
   }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      email: json['email'],
+      name: json['name'],
+      surname: json['surname'],
+      address: json['address'],
+      dateOfBirth: json['date_of_birth'],
+      password: '',
+    );
+  }
 }

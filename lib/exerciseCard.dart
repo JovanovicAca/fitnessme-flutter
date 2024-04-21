@@ -2,10 +2,16 @@ import 'package:fitnessapp/model/Exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import 'model/ExerciseGroup.dart';
+
 class ExerciseCard extends StatefulWidget {
   final Exercise exercise;
+  final bool isAdmin;
+  final Function(String) onDelete;
+  final Function(Exercise) onEdit;
+  final List<ExerciseGroup> exerciseGroups;
 
-  const ExerciseCard({Key? key, required this.exercise}) : super(key: key);
+  const ExerciseCard({Key? key, required this.exercise, this.isAdmin = false, required this.onDelete, required this.onEdit, required this.exerciseGroups}) : super(key: key);
 
   @override
   State<ExerciseCard> createState() => _ExerciseCardState();
@@ -14,6 +20,91 @@ class ExerciseCard extends StatefulWidget {
 class _ExerciseCardState extends State<ExerciseCard> {
   bool isExpanded = false;
   YoutubePlayerController? controller;
+
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Deletion'),
+          content: const Text('Are you sure you want to delete this exercise?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onDelete(widget.exercise.id);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showEditDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final editedExercise = widget.exercise.copy();
+        String? selectedGroup = editedExercise.exerciseGroup;
+        return AlertDialog(
+          title: const Text('Edit Exercise'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextFormField(
+                  initialValue: widget.exercise.name,
+                  onChanged: (value) => editedExercise.name = value,
+                  decoration: InputDecoration(labelText: 'Name'),
+                ),
+                TextFormField(
+                  initialValue: editedExercise.description,
+                  onChanged: (value) => editedExercise.description = value,
+                  decoration: InputDecoration(labelText: 'Description'),
+                ),
+                TextFormField(
+                  initialValue: editedExercise.sequenceOrder.toString(),
+                  onChanged: (value) => editedExercise.sequenceOrder = int.tryParse(value) ?? 0,
+                  decoration: InputDecoration(labelText: 'Sequence Order'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  initialValue: editedExercise.link,
+                  onChanged: (value) => editedExercise.link = value,
+                  decoration: InputDecoration(labelText: 'Link'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Edit'),
+              style: ElevatedButton.styleFrom(primary: Colors.blue),
+              onPressed: () async {
+                editedExercise.exerciseGroup = selectedGroup ?? editedExercise.exerciseGroup;
+                Navigator.of(context).pop();
+                widget.onEdit(editedExercise);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +116,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
     if (videoId != null) {
       controller = YoutubePlayerController(
         initialVideoId: videoId,
-        flags: YoutubePlayerFlags(
+        flags: const YoutubePlayerFlags(
           autoPlay: false,
           mute: true,
           disableDragSeek: false,
@@ -93,7 +184,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Proposal is to do this as " + widget.exercise.sequenceOrder.toString()+ " exercise ",
+                    "Proposal is to do this as " + widget.exercise.sequenceOrder.toString()+ ". exercise ",
                     // style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.left,
                   ),
@@ -119,6 +210,20 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       primary: Colors.blue, // Text and icon color
                     ),
                   ),
+                  if (widget.isAdmin)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                          onPressed: _showEditDialog,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: _showDeleteConfirmationDialog,
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -132,19 +237,23 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
 class ExercisesListWidget extends StatelessWidget {
   final List<Exercise> exercises;
+  final bool isAdmin;
+  final Function(String) onDelete;
+  final Function(Exercise) onEdit;
+  final List<ExerciseGroup> exerciseGroups;
 
-  const ExercisesListWidget({Key? key, required this.exercises})
+  const ExercisesListWidget({Key? key, required this.exercises,  this.isAdmin = false, required this.onDelete, required this.onEdit, required this.exerciseGroups})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 550,
+      height: 500,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: exercises.length,
         itemBuilder: (context, index) {
-          return ExerciseCard(exercise: exercises[index]);
+          return ExerciseCard(exercise: exercises[index], isAdmin: isAdmin, onDelete: onDelete, onEdit: onEdit, exerciseGroups: exerciseGroups);
         },
       ),
     );

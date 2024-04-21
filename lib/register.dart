@@ -28,7 +28,8 @@ class _RegisterPageState extends State<Register> {
       appBar: AppBar(
         title: const Text('Fitness Me'),
         centerTitle: true,
-        backgroundColor: Colors.blue, // AppBar color
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Form(
         key: _formKey,

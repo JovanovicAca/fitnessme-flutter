@@ -11,7 +11,6 @@ class FitnessMe extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          //FIXME: ovde appbar samo ima ako se dolazi iz pocetne strane, nema ako se dodje iz registracije
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: BasePage(child: LoginPage()),
@@ -31,6 +30,7 @@ class BasePage extends StatelessWidget {
         title: const Text('Fitness Me'),
         centerTitle: true,
         backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: child,
     );

@@ -3,7 +3,7 @@ import 'package:fitnessapp/model/WorkoutFetch.dart';
 import 'package:http/http.dart' as http;
 
 const URLWORKOUTUTP = 'http://192.168.0.101:3002/workout';
-const URLWORKOUT = 'http://192.168.0.14:3002/workout';
+const URLWORKOUT = 'http://192.168.0.110:3002/workout';
 
 Future<http.Response> saveWorkout(String data, String? token) async{
   String url = URLWORKOUT;

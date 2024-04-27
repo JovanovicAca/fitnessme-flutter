@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:fitnessapp/model/AdminChatReceive.dart';
 import 'package:fitnessapp/model/Message.dart';
 import 'package:http/http.dart' as http;
 
-final String _baseUrl = 'http://192.168.0.14:3003/chat';
+final String _baseUrl = 'http://192.168.0.110:3003/chat';
 
 Future<String?> getChat(String user1, String user2) async {
   final Uri uri = Uri.parse('$_baseUrl?user1=$user1&user2=$user2');
@@ -82,5 +83,21 @@ Future<http.Response> markMessagesRead(Map<String, dynamic> chatData) async {
     return response;
   } catch (e) {
     rethrow;
+  }
+}
+
+Future<List<AdminChatReceive>> fetchNewAdminChats(String id) async {
+  var url = Uri.parse(_baseUrl + '/new_chats?id=$id');
+  try{
+    var response = await http.get(url);
+    if(response.statusCode == 200){
+      List<dynamic> body = jsonDecode(response.body);
+      List<AdminChatReceive> chatUsers = body.map((json) => AdminChatReceive.fromJson(json)).toList();
+      return chatUsers;
+    }else{
+      throw Exception('Failed to get chat users');
+    }
+  }catch (e) {
+    throw Exception('Failed to get chat users');
   }
 }

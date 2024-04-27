@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../model/ExerciseModel.dart';
 
-const URLEXERCISE = 'http://192.168.0.14:3001/exercise';
-const URLUSER = 'http://192.168.0.14:3000/user';
+const URLEXERCISE = 'http://192.168.0.110:3001/exercise';
+const URLUSER = 'http://192.168.0.110:3000/user';
 const URLEXERCISEUTP = 'http://192.168.0.101:3001/exercise';
 const URLUSERUTP = 'http://192.168.0.101:3000/user';
 

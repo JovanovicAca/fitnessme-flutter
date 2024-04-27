@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../model/UserReceive.dart';
 
-final String _baseUrl = 'http://192.168.0.14:3000/user';
+final String _baseUrl = 'http://192.168.0.110:3000/user';
 final String _baseUrlUTP = 'http://192.168.0.101:3000/user';
 
 Future<http.Response> registerUser(Map<String, dynamic> userData) async {

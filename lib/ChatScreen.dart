@@ -38,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.0.14:3003/ws'),
+      Uri.parse('ws://192.168.0.110:3003/ws'),
     );
     _checkChatExistence();
 

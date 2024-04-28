@@ -41,3 +41,31 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android
+*.android/
+*.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/build
+
+# iOS
+*.ios/
+*.ipa
+*.xcworkspace
+*.xcuserdatad/
+*.xcproj/
+!ios/Runner/GeneratedPluginRegistrant.*
+
+# Flutter build
+.flutter-plugins-dependencies.lock
+.packages
+
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+linux/flutter/generated_plugins.cmake
+macos/Flutter/GeneratedPluginRegistrant.swift
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugins.cmake

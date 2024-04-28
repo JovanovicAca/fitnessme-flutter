@@ -111,8 +111,8 @@ class _ManageExerciseMainState extends State<ManageExerciseMain> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Select Exercise Group',
-                style: Theme.of(context).textTheme.headline4,
+                'Exercise Management',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

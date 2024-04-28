@@ -61,9 +61,11 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
     var response = await saveWorkout(Workout.toJson(workouts, userId, duration), token);
     if (response.statusCode == 201){
       _showSuccessSnackBar(context);
+      setState(() {});
     }
     else{
       _showErrorSnackBar(context);
+      setState(() {});
     }
   }
 
@@ -253,7 +255,6 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
                 trailing: IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {
-                    // Remove the workout from the list
                     setState(() {
                       workouts.removeAt(index);
                     });
@@ -299,12 +300,10 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
     );
 
     if (value != null) {
-      double? duration = double.tryParse(value); // Convert the input to a double
+      double? duration = double.tryParse(value);
       if (duration != null) {
-        // You can now use the duration value for further processing
-        _saveWorkouts(duration); // Call _saveWorkouts with the duration
+        _saveWorkouts(duration);
       } else {
-        // Handle invalid input
         print("Invalid input for duration");
       }
     }

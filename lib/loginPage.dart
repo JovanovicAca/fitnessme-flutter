@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fitnessapp/register.dart';
+import 'package:fitnessapp/services/userService.dart';
 import 'package:flutter/material.dart';
 import 'navigationBottom.dart';
 import 'package:http/http.dart' as http;
@@ -80,12 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   };
                   String body = json.encode(data);
                   try {
-                    // Send the POST request
-                    var response = await http.post(
-                      Uri.parse('http://192.168.0.110:3000/user/login'),
-                      headers: {"Content-Type": "application/json"},
-                      body: body,
-                    );
+                    var response = await login(body);
                     if (mounted) {
                         if (response.statusCode == 200) {
                       String? token =
@@ -117,15 +113,15 @@ class _LoginPageState extends State<LoginPage> {
                     primary: Colors.blue,
                     textStyle: const TextStyle(fontSize: 18)),
               ),
-              TextButton(
-                onPressed: () {
-                  //TODO: Implement your forgot password logic here
-                },
-                style: TextButton.styleFrom(
-                  primary: Colors.blue, // Text color
-                ),
-                child: const Text('Forgot Password?'),
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //
+              //   },
+              //   style: TextButton.styleFrom(
+              //     primary: Colors.blue, // Text color
+              //   ),
+              //   child: const Text('Forgot Password?'),
+              // ),
               const SizedBox(height: 30),
               TextButton(
                 onPressed: () {

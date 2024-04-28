@@ -14,6 +14,7 @@ class FitnessMe extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: BasePage(child: LoginPage()),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

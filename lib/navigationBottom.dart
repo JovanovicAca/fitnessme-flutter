@@ -1,7 +1,6 @@
 import 'package:fitnessapp/manageExerciseMain.dart';
 import 'package:fitnessapp/profile.dart';
 import 'package:fitnessapp/progressMain.dart';
-import 'package:fitnessapp/refreshable.dart';
 import 'package:fitnessapp/utils/jwt.dart';
 import 'package:fitnessapp/workoutPage.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +41,8 @@ class _MainScreenState extends State<MainScreen> {
 
     setState(() {
       _pageOptions = [
-        messageScreen,
         ProfileScreen(),
+        messageScreen,
         ProgressScreen(),
         ManageExerciseMain(),
         CreateWorkoutScreen(),
@@ -75,8 +74,8 @@ class _MainScreenState extends State<MainScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Progress'),
           BottomNavigationBarItem(icon: Icon(Icons.fitness_center), label: 'Exercises'),
           BottomNavigationBarItem(icon: Icon(Icons.create), label: 'Create Workout'),

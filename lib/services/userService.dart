@@ -71,3 +71,14 @@ Future<List<UserReceive>> fetchAllAdmins() async {
       throw Exception('Failed to load admins');
   }
 }
+
+Future<http.Response> login(String loginData) async {
+  String url = '$_baseUrl';
+
+  var response = await http.post(
+    Uri.parse(url),
+    headers: {"Content-Type": "application/json"},
+    body: loginData,
+  );
+  return response;
+}
